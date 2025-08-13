@@ -2,8 +2,8 @@ services:
   - type: web
     name: elearning-backend
     env: python
-    buildCommand: pip install -r requirements.txt && python start.py && python manage.py collectstatic --no-input && python manage.py migrate
-    startCommand: gunicorn wsgi:application --config gunicorn.conf.py
+    buildCommand: pip install -r requirements.txt && python start.py && python manage.py collectstatic --no-input
+    startCommand: chmod +x start.sh && ./start.sh
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -31,3 +31,5 @@ services:
         value: https://your-frontend-domain.netlify.app,http://localhost:3000
       - key: PORT
         value: 8000
+      - key: RENDER
+        value: true
