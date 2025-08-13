@@ -1,8 +1,9 @@
 # Gunicorn configuration file
+import os
 import multiprocessing
 
 # Server socket
-bind = "0.0.0.0:10000"
+bind = f"0.0.0.0:{os.environ.get('PORT', '8000')}"
 backlog = 2048
 
 # Worker processes
@@ -31,6 +32,6 @@ user = None
 group = None
 tmp_upload_dir = None
 
-# SSL (not used in this configuration)
+# SSL (not needed for Render as it handles SSL)
 keyfile = None
 certfile = None
