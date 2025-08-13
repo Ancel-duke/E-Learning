@@ -15,7 +15,7 @@ Django REST API backend for the e-learning platform.
 ### Option 2: Manual Configuration
 1. Create a new Web Service on Render
 2. Set Build Command: `./build.sh`
-3. Set Start Command: `gunicorn elearning_backend.wsgi:application --bind 0.0.0.0:$PORT`
+3. Set Start Command: `gunicorn wsgi:application --bind 0.0.0.0:$PORT`
 4. Add environment variables (see below)
 
 ## Environment Variables
