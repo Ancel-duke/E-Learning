@@ -161,8 +161,8 @@ CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:
 
 # Add your domains here when deployed
 CORS_ALLOWED_ORIGINS.extend([
-    "https://your-frontend-domain.netlify.app",
-    "https://your-custom-domain.com",
+    "https://e-learningdash.netlify.app",
+    #"https://your-custom-domain.com",
 ])
 
 # For development, allow all origins (remove in production)
