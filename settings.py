@@ -163,7 +163,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://localhost:5173', cast=lambda v: [s.strip() for s in v.split(',')])
+def parse_cors_origins(value):
+    """Parse CORS origins from environment variable"""
+    if not value:
+        return []
+    # Handle the case where the entire string is treated as one origin
+    if value.startswith('CORS_ALLOWED_ORIGINS='):
+        value = value.replace('CORS_ALLOWED_ORIGINS=', '')
+    return [s.strip() for s in value.split(',') if s.strip()]
+
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://localhost:5173', cast=parse_cors_origins)
 
 # Add your domains here when deployed
 CORS_ALLOWED_ORIGINS.extend([
@@ -174,6 +183,13 @@ CORS_ALLOWED_ORIGINS.extend([
 # For development, allow all origins (remove in production)
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
+
+# Ensure we have valid CORS origins
+if not CORS_ALLOWED_ORIGINS:
+    CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+
+# Filter out any invalid origins
+CORS_ALLOWED_ORIGINS = [origin for origin in CORS_ALLOWED_ORIGINS if origin.startswith(('http://', 'https://'))]
 
 CORS_ALLOW_CREDENTIALS = True
 
