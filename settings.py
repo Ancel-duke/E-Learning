@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure--tyl#l#n1ek4av#qw7i&#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,e-learning-zh4y.onrender.com').split(',')
 
 
 # Application definition
@@ -162,13 +162,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000').split(',')
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://localhost:5173').split(',')
 
 # Add your Netlify domain here when deployed
 CORS_ALLOWED_ORIGINS.extend([
     "https://your-app-name.netlify.app",
     "https://your-custom-domain.com",
+    "https://e-learning-zh4y.onrender.com",
 ])
+
+# For development, allow all origins (remove in production)
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
